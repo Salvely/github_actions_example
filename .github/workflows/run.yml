@@ -10,6 +10,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
+      - name: install google test
+        working-directory: ${{github.workspace}}/tests
+        shell: bash
+        run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make
       - name: Checkout Project
         uses: actions/checkout@v4.1.7
       - name: CMake Action
@@ -19,10 +23,34 @@ jobs:
       - name: Analysis
         run: ming32-make analysis
       - name: Format the code
-        run: mingw32-make format && mingw32-make format-check && mingw32-make format-check-changed
+        run: |
+          mingw32-make format
+          mingw32-make format-check
+          mingw32-make format-check-changed
       - name: Test
         run: mingw32-make test
       - name: Generate the doc
         run: mingw32-make doxygen
       - name: Install the project
         run: mingw32-make install
+      - name: make report
+        working-directory: ${{github.workspace}}/tests
+        shell: bash
+        run: |
+          python google_test.py Test_Pss_Asio.xml
+          ls -l
+      - uses: actions/checkout@v1
+      - name: commit file
+        working-directory: ${{github.workspace}}
+        shell: bash
+        run: |
+          date > test.txt
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add -f test.txt
+          git commit -m "Update test.txt"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

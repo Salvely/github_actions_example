@@ -29,9 +29,26 @@ target_link_libraries(${PROJECT_NAME} PRIVATE googletest_lib)
 # if(BOOST_FOUND)
 #         message("boost found")
 # endif()
-include_directories("D:/Program_Files/Git/usr/lib/googletest-distribution/include")
-link_directories("D:/Program_Files/Git/usr/lib/googletest-distribution/lib")
-find_package(GTest REQUIRED)
+# include_directories("D:/Program_Files/Git/usr/lib/googletest-distribution/include")
+# link_directories("D:/Program_Files/Git/usr/lib/googletest-distribution/lib")
+# find_package(GTest REQUIRED)
+
+if(UNIX)
+	find_package(GTEST)
+	if (!GTEST_FOUND)
+		message(FATAL_ERROR "googletest library is needed but can't be found")
+	endif ()
+	
+	link_directories(${GTEST_LIBRARY})
+	target_link_libraries(test_pss_asio gtest pthread dl)
+endif()
+
+find_path(GTEST_INCLUDE_DIR gtest.h /usr/include/ /usr/local/include /usr/src/googletest/googletest/include/)
+find_library(GTEST_LIBRARY NAMES gtest PATHS /usr/lib/ /usr/lib/x86_64-linux-gnu/)
+
+if (GTEST_INCLUDE_DIR AND GTEST_LIBRARY)
+    set(GTEST_FOUND TRUE)
+endif (GTEST_INCLUDE_DIR AND GTEST_LIBRARY)
 
 # add boost test
 enable_testing()
