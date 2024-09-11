@@ -20,15 +20,15 @@ jobs:
         with:
           generator: "Unix Makefiles"
       - name: Analysis
-        run: mingw32-make analysis
+        run: make analysis
       - name: Format the code
         run: |
-          mingw32-make format
-          mingw32-make format-check
-          mingw32-make format-check-changed
+          make format
+          make format-check
+          make format-check-changed
       - name: Test
-        run: mingw32-make test
+        run: make test
       - name: Generate the doc
-        run: mingw32-make doxygen
+        run: make doxygen
       - name: Install the project
-        run: mingw32-make install
+        run: make install
