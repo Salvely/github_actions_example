@@ -1,0 +1,3 @@
+E:/projects/tools/boost_test_example/bin/CMakeFiles/CMakeScratch/TryCompile-om35w5/CMakeFiles/cmTC_3e912.dir
+E:/projects/tools/boost_test_example/bin/CMakeFiles/CMakeScratch/TryCompile-om35w5/CMakeFiles/edit_cache.dir
+E:/projects/tools/boost_test_example/bin/CMakeFiles/CMakeScratch/TryCompile-om35w5/CMakeFiles/rebuild_cache.dir
