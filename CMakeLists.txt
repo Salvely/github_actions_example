@@ -40,7 +40,6 @@ if(UNIX)
 	endif ()
 	
 	link_directories(${GTEST_LIBRARY})
-	target_link_libraries(test_pss_asio gtest pthread dl)
 endif()
 
 # add boost test
